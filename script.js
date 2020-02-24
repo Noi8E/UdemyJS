@@ -27,18 +27,5 @@ const moneyPerDay = Math.floor(appData.budget / 30);
 
 //Показать юзеру средний расход за день при известном доходе
 alert(`ваш расход за день в месяц где-то ${moneyPerDay}`);
-// проверяем что внутри appData
+// проверяем что внутри appData все записалось (просто валим в консоль ^_^)
 console.log(appData);
-
-
-
-
-
-
-// присваиваем объекту expenses, который УЖЕ объявлен, данны
-
-
-
-// console.log(appData.budget);
-
-
