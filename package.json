@@ -1,0 +1,25 @@
+{
+  "name": "udemyjs",
+  "version": "1.0.0",
+  "description": "udemyJSCourseProject",
+  "main": "script.js",
+  "scripts": {
+    "test": "run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noi8E/UdemyJS.git"
+  },
+  "keywords": [
+    "Udemy"
+  ],
+  "author": "FEdor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noi8E/UdemyJS/issues"
+  },
+  "homepage": "https://github.com/Noi8E/UdemyJS#readme",
+  "dependencies": {
+    "jshint": "^2.11.0"
+  }
+}
