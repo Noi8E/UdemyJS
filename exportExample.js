@@ -1,1 +1,1 @@
-export
+export const forExportExample = 123;
