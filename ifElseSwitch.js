@@ -40,5 +40,6 @@ switch (a) {
         break;
 }   
 console.log(a);
+console.log(b);
 
 
