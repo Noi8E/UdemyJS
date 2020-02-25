@@ -1,13 +1,8 @@
 //блок с первыми вопросами
-let money = prompt("Ваш бюджет на месяц?");
+let money = +prompt("Ваш бюджет на месяц?");
 let time = prompt("Введите дату в формате YYYY-MM-DD");
 
 // блок с вопросиками записываем в переменные 
-let requiredExpense1 = prompt("Введите обязательную статью расходов в этом месяце"),
-    spendValue1 = prompt("Во сколько обойдется?"),
-    requiredExpense2 = prompt("Введите еще одну обязательную статью расходов в этом месяце"),
-    spendValue2 = prompt("а это во сколько обойдется?");
-
 // объект с данными юзера
 let appData = {
     budget: money,
@@ -19,13 +14,40 @@ let appData = {
 };
 
 //пишем внутрь вложенного объекта статьи и расходы. Расходы приходят в стринге!!!
-appData.expenses.requiredExpense1 = spendValue1;
-appData.expenses.requiredExpense2 = spendValue2;
+
+
+
+for(let i = 0; i < 2; i++) {
+    // тут непонятно, как конкретезировать пару вопрос-ответ?
+     let requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
+         spendValue = +prompt("Во сколько обойдется?");
+
+     if ( (typeof(requiredExpense)) === 'string' && (typeof(spendValue)) != null 
+     && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
+            appData.expenses[requiredExpense] = spendValue;
+     }
+     else {
+
+     }
+
+};
+
+appData.moneyPerDay = Math.floor(appData.budget / 30);
 
 // считаем расход на день. Скругление до целого в меньшую сторону. Можно и через ифы, но пока рановато усложнять.
-const moneyPerDay = Math.floor(appData.budget / 30);
 
 //Показать юзеру средний расход за день при известном доходе
-alert(`ваш расход за день в месяц где-то ${moneyPerDay}`);
-// проверяем что внутри appData все записалось (просто валим в консоль ^_^)
+alert(`ваш расход за день в месяц где-то ${appData.moneyPerDay}`);
+// 
+// 
+if (appData.moneyPerDay < 1500) {
+    alert("вы нищеброд");
+}
+ if(appData.moneyPerDay > 1500 && appData.moneyPerDay >=4000) {
+    alert('больше работайте');
+}
+else {
+    console.log("что-то пошло не так");
+};
+
 console.log(appData);
