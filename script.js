@@ -3,10 +3,10 @@ let money = prompt("Ваш бюджет на месяц?");
 let time = prompt("Введите дату в формате YYYY-MM-DD");
 
 // блок с вопросиками записываем в переменные 
-let requiredExpense1 = prompt("Введите обязательную статью расходов в этом месяце");
-let spendValue1 = prompt("Во сколько обойдется?");
-let requiredExpense2 = prompt("Введите еще одну обязательную статью расходов в этом месяце");
-let spendValue2 = prompt("а это во сколько обойдется?");
+let requiredExpense1 = prompt("Введите обязательную статью расходов в этом месяце"),
+    spendValue1 = prompt("Во сколько обойдется?"),
+    requiredExpense2 = prompt("Введите еще одну обязательную статью расходов в этом месяце"),
+    spendValue2 = prompt("а это во сколько обойдется?");
 
 // объект с данными юзера
 let appData = {
