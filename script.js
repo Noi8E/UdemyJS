@@ -1,9 +1,12 @@
-//
-
+//Памятка по курсу:
+// + перед выражением делает выражение is Number
+// Number.isNaN() - способ определить - является ли полученный аргумент is Number или нет
+// для нумеровния чего-либо можно использовать счетчик (i)
+// Запоминание чего-то в объек
 let money, time;
 function start () {
-    money = +prompt("Ваш бюджет на месяц?");
-    time = prompt("Введите дату в формате YYYY-MM-DD");
+        money = +prompt("Ваш бюджет на месяц?"),
+        time = prompt("Введите дату в формате YYYY-MM-DD");
 
     while (isNaN(money) || money === '' || money === null) {
         money = +prompt("Ваш бюджет на месяц2?");
@@ -21,15 +24,14 @@ let appData = {
     income: [],
     savings: true
 };
-
-let requiredExpense, spendValue;
+// функция для записи статей расходов и трат в appData.obj
 function chooseExpenses() {
     for(let i = 0; i < 2; i++) {
         // тут непонятно, как конкретезировать пару вопрос-ответ?
-        requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
-        spendValue = +prompt("Во сколько обойдется?");
+        let requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
+            spendValue = +prompt("Во сколько обойдется?");
     
-         if ( (typeof(requiredExpense)) === 'string' && (typeof(spendValue)) != null && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
+         if ((typeof(requiredExpense)) === 'string' && (typeof(spendValue)) != null && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
                 appData.expenses[requiredExpense] = spendValue;
          }
          else {
@@ -39,17 +41,24 @@ function chooseExpenses() {
     };
 }
 chooseExpenses();
+//записываем необязательные расходы
+function chooseOptExpenses() {
+    for (i = 1; i <= 3; i++) {
+        let optionalExpenses = prompt(`статья необязательных расходов?`);
+        appData.optionalExpenses[i] = optionalExpenses;
+    }   
+};
+chooseOptExpenses();
 
-appData.moneyPerDay = (appData.budget / 30).toFixed(); 
-
-// считаем расход на день. Скругление до целого в меньшую сторону. Можно и через ифы, но пока рановато усложнять.
-
-//Показать юзеру средний расход за день при известном доходе
-alert(`ваш расход за день в месяц где-то ${appData.moneyPerDay}`);
-// 
-// 
-
-// Оформляем дневной расход денег. Оборачиваем в функцию.
+// считаем расход на день. 
+function detectLevel() {
+    appData.moneyPerDay = (appData.budget / 30).toFixed();
+    if(appData.moneyPerDay) {
+        alert(`ваш расход за день в месяц где-то ${appData.moneyPerDay}`);
+    }
+};
+detectLevel();
+ 
 
 function detectDayBudget() {
     if (appData.moneyPerDay < 700) {
@@ -76,43 +85,10 @@ function checkSavings() {
         let save = +prompt('сколько накопил?'),
             percent = +prompt('под какой процент?');
             
-            appData.monthIncome = save/100/12*percent;
-            alert(`доход в месяц с вашего депозита ${(appData.monthIncome).toFixed()}`);
+        appData.monthIncome = save/100/12*percent;
+        alert(`доход в месяц с вашего депозита ${(appData.monthIncome).toFixed()}`);
         
     }
 }
 checkSavings();
 //
-
-
-// !делаем через while-loop
-// let i = 0;
-// while ( i < 2) {
-//     let requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
-//         spendValue = +prompt("Во сколько обойдется?");
-//     i += 1;    
-
-//     if ( (typeof(requiredExpense) ) === 'string' && (typeof(spendValue)) != null 
-//      && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
-//             appData.expenses[requiredExpense] = spendValue;
-//     }
-
-//      else {
-//         alert("Данные введены некорректно, обновите страницу");
-//     }
-// };
-// !делаем через do {} while()
-// let i = 0;
-// do {
-//     let requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
-//         spendValue = +prompt("Во сколько обойдется?");
-       
-    
-//     if ( (typeof(requiredExpense) ) === 'string' && (typeof(spendValue)) != null && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
-//                 appData.expenses[requiredExpense] = spendValue; 
-//                 i += 1; }
-//     else {
-//         alert("Данные введены некорректно, обновите страницу");
-//     }            
-    
-//     } while ( i < 2);
