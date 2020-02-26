@@ -1,33 +1,90 @@
-//блок с первыми вопросами
-let money = +prompt("Ваш бюджет на месяц?");
-let time = prompt("Введите дату в формате YYYY-MM-DD");
+//
 
-// блок с вопросиками записываем в переменные 
-// объект с данными юзера
+let money, time;
+function start () {
+    money = +prompt("Ваш бюджет на месяц?");
+    time = prompt("Введите дату в формате YYYY-MM-DD");
+
+    while (isNaN(money) || money === '' || money === null) {
+        money = +prompt("Ваш бюджет на месяц2?");
+    }
+}
+start();
+
+
+
 let appData = {
     budget: money,
     timeData: time,
     expenses: {},
     optionalExpenses: {},
     income: [],
-    savings: false
+    savings: true
 };
 
-// !делаем через for () {}
-for(let i = 0; i < 2; i++) {
-    // тут непонятно, как конкретезировать пару вопрос-ответ?
-     let requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
-         spendValue = +prompt("Во сколько обойдется?");
+let requiredExpense, spendValue;
+function chooseExpenses() {
+    for(let i = 0; i < 2; i++) {
+        // тут непонятно, как конкретезировать пару вопрос-ответ?
+        requiredExpense = prompt("Введите обязательную статью расходов в этом месяце"),
+        spendValue = +prompt("Во сколько обойдется?");
+    
+         if ( (typeof(requiredExpense)) === 'string' && (typeof(spendValue)) != null && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
+                appData.expenses[requiredExpense] = spendValue;
+         }
+         else {
+            i -= 1;
+         }
+    
+    };
+}
+chooseExpenses();
 
-     if ( (typeof(requiredExpense)) === 'string' && (typeof(spendValue)) != null 
-     && requiredExpense != '' && spendValue != '' && requiredExpense.length < 50  ) {
-            appData.expenses[requiredExpense] = spendValue;
-     }
-     else {
-        alert("Данные введены некорректно, обновите страницу");
-     }
+appData.moneyPerDay = (appData.budget / 30).toFixed(); 
+
+// считаем расход на день. Скругление до целого в меньшую сторону. Можно и через ифы, но пока рановато усложнять.
+
+//Показать юзеру средний расход за день при известном доходе
+alert(`ваш расход за день в месяц где-то ${appData.moneyPerDay}`);
+// 
+// 
+
+// Оформляем дневной расход денег. Оборачиваем в функцию.
+
+function detectDayBudget() {
+    if (appData.moneyPerDay < 700) {
+        alert("вы умеете тратить деньги");
+    }
+    if (appData.moneyPerDay > 700 && appData.moneyPerDay < 2000) {
+        console.log("нормально тратите, возможно надо посчитать ваши доходы");
+    }
+    if(appData.moneyPerDay > 2000 && appData.moneyPerDay >=4000) {
+        alert('гуляй-шикуй!');
+    }
+    else {
+        console.log("что-то пошло не так");
+    }
+    
+    console.log(appData);
 
 };
+detectDayBudget();
+
+
+function checkSavings() {
+    if (appData.savings == true) {
+        let save = +prompt('сколько накопил?'),
+            percent = +prompt('под какой процент?');
+            
+            appData.monthIncome = save/100/12*percent;
+            alert(`доход в месяц с вашего депозита ${(appData.monthIncome).toFixed()}`);
+        
+    }
+}
+checkSavings();
+//
+
+
 // !делаем через while-loop
 // let i = 0;
 // while ( i < 2) {
@@ -59,26 +116,3 @@ for(let i = 0; i < 2; i++) {
 //     }            
     
 //     } while ( i < 2);
-
-appData.moneyPerDay = Math.floor(appData.budget / 30);
-
-// считаем расход на день. Скругление до целого в меньшую сторону. Можно и через ифы, но пока рановато усложнять.
-
-//Показать юзеру средний расход за день при известном доходе
-alert(`ваш расход за день в месяц где-то ${appData.moneyPerDay}`);
-// 
-// 
-if (appData.moneyPerDay < 700) {
-    alert("вы нищеброд");
-}
-if (appData.moneyPerDay > 700 && appData.moneyPerDay < 1000) {
-    console.log("нормально");
-}
-if(appData.moneyPerDay > 1000 && appData.moneyPerDay >=4000) {
-    alert('у нас Рокфеллер!');
-}
-else {
-    console.log("что-то пошло не так");
-}
-
-console.log(appData);
