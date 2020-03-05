@@ -63,7 +63,7 @@ let appData = {
         else {
             console.log("что-то пошло не так");
         }  
-        console.log(appData);
+        console.log(appData.moneyPerDay);
     },
     checkSavings: function() {
         if (appData.savings == true) {
@@ -74,6 +74,13 @@ let appData = {
             alert(`доход в месяц с вашего депозита ${(appData.monthIncome).toFixed()}`);
             
         }
+    },
+    chooseIncome: function() {
+        items = prompt('введите доп. доходы через зпт.', "");
+        appData.income = items.split(', ');
+        appData.income.push(prompt('еще что-то?', ""));
+        appData.income.sort();
+
     }
 
 
