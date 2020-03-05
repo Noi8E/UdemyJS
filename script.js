@@ -77,6 +77,9 @@ let appData = {
     },
     chooseIncome: function() {
         items = prompt('введите доп. доходы через зпт.', "");
+        while (typeof items != 'string' || !items || items == null) {
+            items = prompt('введите доп. доходы через зпт-2', "");   
+        }
         appData.income = items.split(', ');
         appData.income.push(prompt('еще что-то?', ""));
         appData.income.sort();
