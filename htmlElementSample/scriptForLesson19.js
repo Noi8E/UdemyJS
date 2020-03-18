@@ -11,9 +11,6 @@ btn[1].style.borderRadius = '100%';
 circle[0].style.backgroundColor = 'yellow';
 circle[1].style.backgroundColor = 'red';
 
-// for (let i  = 0; i < heart.length; i++) {
-//     heart[i].style.backgroundColor = 'blue';
-// }
 
 heart.forEach (function(item, i, hearts) {
     item.style.backgroundColor = 'green';
