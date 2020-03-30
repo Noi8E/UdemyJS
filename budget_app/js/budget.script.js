@@ -13,7 +13,7 @@ let startButton = document.getElementById('start'),
     optionalExpensesValue = document.getElementsByClassName('optionalexpenses-value')[0],
     incomeValue = document.getElementsByClassName('income-value')[0],
     monthSavingsValue = document.getElementsByClassName('monthsavings-value')[0],
-    yearsavingsValue = document.getElementsByClassName('yearsavings-value')[0],
+    yearSavingsValue = document.getElementsByClassName('yearsavings-value')[0],
     //get Inputs 
     expensesItems = document.getElementsByClassName('expenses-item'),
     //Утвердить/рассчитать
@@ -23,10 +23,10 @@ let startButton = document.getElementById('start'),
     //get optional Expenses Inputs
     optionalexpensesItem = document.querySelectorAll('.optionalexpenses-item'),
     // other items
-    chooseIncome = document.querySelector('.choose-income'),
+    incomeItem = document.querySelector('.choose-income'),
     checkboxSavings = document.querySelector('.checksavings input'),
-    chooseSum = document.querySelector('.choose-sum'), 
-    choosePercent = document.querySelector('.choose-percent'),
+    sumValue = document.querySelector('.choose-sum'), 
+    percentValue = document.querySelector('.choose-percent'),
     yearValue = document.querySelector('.year-value'),
     monthValue = document.querySelector('.month-value'),
     dayValue = document.querySelector('.day-value');
@@ -74,12 +74,74 @@ let startButton = document.getElementById('start'),
 
 
     //обработчик с доп.расходами
-    optionalexpensesBtn.addEventListener('click', function(){
+    optionalexpensesBtn.addEventListener('click', function() {
         for (let i = 0; i < optionalexpensesItem.length; i++) {
-            let opt = optionalexpensesItem[i].value;
-            appData.optionalExpenses[i] = opt;
-            optionalExpensesValue.textConten += appData.optionalExpenses[i] + ' ';
+            appData.optionalExpenses[i] = optionalexpensesItem[i].value;
+            optionalExpensesValue.textContent += appData.optionalExpenses[i] + ' ';
         }   
+    });
+    // обработчик с бюджетом
+    countBudgetBtn.addEventListener('click', function() {
+
+        if (appData.budget != undefined) {
+            appData.moneyPerDay = (appData.budget / 30).toFixed();
+            daybudgetValue.textContent = appData.moneyPerDay;
+
+        if (appData.moneyPerDay < 100) {
+            levelValue.textContent = 'вы умеете тратить деньги';
+        }
+        if (appData.moneyPerDay > 700 && appData.moneyPerDay < 2000) {
+            levelValue.textContent = 'нормально тратите, возможно надо посчитать ваши доходы';
+        }
+        if (appData.moneyPerDay > 2000 && appData.moneyPerDay >=4000) {
+            levelValue.textContent = 'гуляй-шикуй!';
+        }
+        else {
+            levelValue.textContent = 'что-то пошло не так';
+        }  
+        } else {
+            levelValue.textContent = 'ашипка';
+        }
+    });
+
+    incomeItem.addEventListener('input', function () {
+        let items = incomeItem.value;
+        appData.income = items.split(', ');
+        incomeValue.textContent = appData.income;
+           
+    });
+
+    //пробиваем накопления пассажира
+    checkboxSavings.addEventListener('click', function(){
+        if (appData.savings) {
+            appData.savings = false;
+        }
+        else {
+            appData.savings = true;
+        }
+    })
+
+    sumValue.addEventListener('input', function() {
+        if (appData.savings == true) {
+            let sum = +sumValue.value,
+                percent = +percentValue.value;
+            appData.monthIncome = sum/100/12*percent;
+            appData.yearIncome = sum/100*percent;
+
+            monthSavingsValue.textContent = appData.monthIncome.toFixed(1);
+            yearSavingsValue.textContent = appData.yearIncome.toFixed(1);
+        }
+    })
+    percentValue.addEventListener('input', function() {
+        if(appData.savings == true) {
+            let sum = +sumValue.value,
+                percent = +percentValue.value;
+            appData.monthIncome = sum/100/12*percent;
+            appData.yearIncome = sum/100*percent;
+
+            monthSavingsValue.textContent = appData.monthIncome.toFixed(1);
+            yearSavingsValue.textContent = appData.yearIncome.toFixed(1);
+        }
     })
     
     // объект-хранилище
@@ -89,62 +151,7 @@ let startButton = document.getElementById('start'),
         expenses: {},
         optionalExpenses: {},
         income: [],
-        savings: true,
-        detectLevel: function() {
-            appData.moneyPerDay = (appData.budget / 30).toFixed();
-            if(appData.moneyPerDay) {
-                alert(`ваш расход за день в месяц где-то ${appData.moneyPerDay}`);
-            }
-        },
-        detectDayBudget: function() {
-            if (appData.moneyPerDay < 700) {
-                alert("вы умеете тратить деньги");
-            }
-            if (appData.moneyPerDay > 700 && appData.moneyPerDay < 2000) {
-                console.log("нормально тратите, возможно надо посчитать ваши доходы");
-            }
-            if(appData.moneyPerDay > 2000 && appData.moneyPerDay >=4000) {
-                alert('гуляй-шикуй!');
-            }
-            else {
-                console.log("что-то пошло не так");
-            }  
-            console.log(appData.moneyPerDay);
-        },
-        checkSavings: function() {
-            if (appData.savings == true) {
-                let save = +prompt('сколько накопил?'),
-                    percent = +prompt('под какой процент?');
-                    
-                appData.monthIncome = save/100/12*percent;
-                alert(`доход в месяц с вашего депозита ${(appData.monthIncome).toFixed()}`);
-                
-            }
-        },
-        chooseIncome: function() {
-            items = prompt('введите доп. доходы через зпт.', "");
-            while (typeof items != 'string' || !items || items == null) {
-                items = prompt('введите доп. доходы через зпт.', "");   
-            }
-            appData.income = items.split(', '); 
-            //Если юзер вводит несколько значений, как их подпушить в массив?
-            //Созздаем временнный массив, а потом схлопываем через .push.apply
-            appData.income.push(prompt('может что-то запамятовали?', ""));
-            appData.income.sort();
-    
-        },
-        bonusesIncome: function() {
-            appData.income.forEach((item, i) => {
-                alert(`способы дополнительного заработка ${i+1} : ${item}`);
-            }); 
-        },
-        showMeAll: function() {
-            for (let key in appData) {
-                console.log(`Наша программа включает в себя данные: ${appData[key]}`);
-            };
-        }
-    
-    
+        savings: false,
     };
 
 
