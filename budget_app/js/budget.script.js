@@ -32,6 +32,13 @@ let startButton = document.getElementById('start'),
     dayValue = document.querySelector('.day-value');
 
     let money, time;
+
+    //Делаем баттоны задизейбленными, пока не стартанула прога
+    expensesItemBtn.disabled = true;
+    optionalexpensesBtn.disabled = true;
+    countBudgetBtn.disabled = true;
+
+    //если кнопка НАЧАТЬ РАССЧЕТ еще не нажата - дизэйблим все кнопки
     //корячим обработчик + функцию с обработкой введенных величин
     startButton.addEventListener('click', function() {
         time = prompt("Введите дату в формате YYYY-MM-DD"),
@@ -47,6 +54,11 @@ let startButton = document.getElementById('start'),
         yearValue.value = new Date(Date.parse(time)).getFullYear();
         monthValue.value = new Date(Date.parse(time)).getMonth() + 1;
         dayValue.value = new Date(Date.parse(time)).getDate();
+
+        //переключаем кнопки в Enabled
+        expensesItemBtn.disabled = false;
+        optionalexpensesBtn.disabled = false;
+        countBudgetBtn.disabled = false;
     })
     //готовим константу, в которую положим кол-во инпутов для обязателных расходов
     //выносим ее в область глобальной видимости ибо мжем себе позволить
@@ -70,7 +82,12 @@ let startButton = document.getElementById('start'),
             }
         }
         expensesValue.textContent = sum + ' рублей';
+        //закидываем значение в appData--> глобальную область видимости
+        appData.sumExpenses = sum;
+        
     });
+    
+
 
 
     //обработчик с доп.расходами
@@ -84,13 +101,13 @@ let startButton = document.getElementById('start'),
     countBudgetBtn.addEventListener('click', function() {
 
         if (appData.budget != undefined) {
-            appData.moneyPerDay = (appData.budget / 30).toFixed();
+            appData.moneyPerDay = ((appData.budget - appData.sumExpenses)/30).toFixed();
             daybudgetValue.textContent = appData.moneyPerDay;
 
-        if (appData.moneyPerDay < 100) {
+        if (appData.moneyPerDay < 400) {
             levelValue.textContent = 'вы умеете тратить деньги';
         }
-        if (appData.moneyPerDay > 700 && appData.moneyPerDay < 2000) {
+        if (appData.moneyPerDay > 400 && appData.moneyPerDay < 2000) {
             levelValue.textContent = 'нормально тратите, возможно надо посчитать ваши доходы';
         }
         if (appData.moneyPerDay > 2000 && appData.moneyPerDay >=4000) {
