@@ -2,7 +2,7 @@
 //     return a + b;
 //   }
 
-module.exports let months = ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const testArr = ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
-console.log(months);
+export default testArr;

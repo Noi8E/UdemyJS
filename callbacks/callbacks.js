@@ -1,21 +1,24 @@
-function test(num,someFunc) {
-someFunc;
-console.log(num);
+//Способ 1. Когда коллбэк прописывается в теле функции  
+// doHomework('JS',() => {
+//     alert('Finished my homework');
+//   });
+
+//Способ 2. Когда коллбэк прописывается отдельно и затем
+//пробрасывается как аргумент в функцию.
+doHomework('JS', finishCall);
+
+function finishCall() {
+    alert('Finished my homework');
+};
+
+function first() {
+    setTimeout(() => {
+        console.log(second());
+    }, 2000)
+    
 }
-
-
-//для варианта 1
-function someFunc() {
-    console.log(2+2);
+function second() {
+    console.log(2);
 }
-
-
-
-//вариант 1 когда функция объявлена вне (выше по коду) и когда ты ее вызываешь в ро
-// test(12,someFunc);
-
-//вариант 2 когда функция объявляется внутри вызова первой функции.
-test(12, someFunc);
-
-console.log(someFunc());
-
+first();
+second();
